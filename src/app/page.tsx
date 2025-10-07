@@ -1,4 +1,3 @@
-import { AppLayout } from '@/components/layout/app-layout'
 import { StatsCard } from '@/components/features/dashboard/stats-card'
 import { getDashboardStats } from '@/lib/db/queries'
 import { BookOpen, Clock, Bug, Brain } from 'lucide-react'
@@ -8,8 +7,7 @@ export default async function DashboardPage() {
   const stats = await getDashboardStats()
 
   return (
-    <AppLayout>
-      <div className="space-y-6">
+    <div className="space-y-6">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
           <p className="text-muted-foreground">
@@ -87,6 +85,6 @@ export default async function DashboardPage() {
           </Card>
         </div>
       </div>
-    </AppLayout>
+    </div>
   )
 }
