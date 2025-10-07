@@ -103,20 +103,31 @@ Note: PDF text extraction deferred due to library compatibility issues with Next
 - ✅ Error detail modal with full information display
 - ✅ Error statistics component with visualizations
 - ✅ Error categorization system
-- ✅ Link errors to sessions and assignments
+- ✅ Link errors to sessions and assignments automatically
 - ✅ Track fix duration and help level used
-- ✅ Code context support with syntax display
-- ✅ Fix applied tracking
-- ✅ Delete error functionality
+- ✅ Code context support with monospace display
+- ✅ Fix applied tracking with notes
+- ✅ Delete error functionality with confirmation
 - ✅ Error type color coding (syntax, logic, style, test, runtime, other)
-- ✅ API route for error stats
+- ✅ API route for error statistics
+- ✅ API route for error patterns detection
+- ✅ API route for error export (CSV/JSON)
+- ✅ Common mistakes widget with trend indicators
+- ✅ Pattern detection with recent vs old comparison
 - ✅ Pie chart for errors by type
 - ✅ Bar chart for common categories
 - ✅ Line chart for error trend over time
 - ✅ Resolution rate calculation
 - ✅ Average fix time calculation
 - ✅ Pagination for error list
-- ✅ Integrated into study page with 2 new tabs
+- ✅ Full-text search across errors
+- ✅ Export errors to CSV format
+- ✅ Export errors to JSON format
+- ✅ Dedicated errors page with tabs
+- ✅ Integrated into study page with 2 tabs
+- ✅ Common mistakes widget on dashboard
+- ✅ Error insights and improvement tips
+- ✅ Links to errors page in sidebar navigation
 
 ## Phase 9: Concept Mastery ⏳ 0%
 - Not started

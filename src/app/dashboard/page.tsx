@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { prisma } from '@/lib/db/prisma';
 import { AssignmentStats } from '@/components/features/assignments/assignment-stats';
+import { CommonMistakes } from '@/components/features/errors/common-mistakes';
 
 export default async function DashboardPage() {
   const assignments = await prisma.assignment.findMany();
@@ -14,7 +15,7 @@ export default async function DashboardPage() {
 
       <AssignmentStats assignments={assignments} />
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-3">
         <Card>
           <CardHeader>
             <CardTitle>Recent Activity</CardTitle>
@@ -34,6 +35,8 @@ export default async function DashboardPage() {
             <div className="text-sm text-muted-foreground">No upcoming deadlines</div>
           </CardContent>
         </Card>
+
+        <CommonMistakes />
       </div>
     </div>
   );
