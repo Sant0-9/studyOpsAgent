@@ -48,6 +48,7 @@ export async function POST(request: NextRequest) {
       if (materialType === MaterialType.TEXT) {
         content = buffer.toString('utf-8');
       }
+      // Note: PDF text extraction deferred due to library compatibility issues with Next.js 15
 
       // Create database entry
       const material = await prisma.studyMaterial.create({

@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -7,11 +9,11 @@ import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { File, FileText, Image as ImageIcon, MoreVertical, Download, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
-import { StudyMaterial, MaterialType } from '@prisma/client';
+import { StudyMaterial } from '@prisma/client';
+import { toast } from 'sonner';
 
 interface MaterialCardProps {
   material: StudyMaterial & { assignment?: { title: string; id: string } | null };
-  onDelete?: (id: string) => void;
 }
 
 const typeIcons = {
@@ -30,10 +32,38 @@ const typeColors = {
   OTHER: 'bg-gray-100 text-gray-800',
 };
 
-export function MaterialCard({ material, onDelete }: MaterialCardProps) {
+export function MaterialCard({ material }: MaterialCardProps) {
+  const router = useRouter();
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const handleDownload = () => {
     if (material.fileUrl) {
       window.open(material.fileUrl, '_blank');
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!confirm(`Are you sure you want to delete "${material.title}"?`)) {
+      return;
+    }
+
+    setIsDeleting(true);
+    try {
+      const response = await fetch(`/api/materials/${material.id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete material');
+      }
+
+      toast.success('Material deleted');
+      router.refresh();
+    } catch (error) {
+      toast.error('Failed to delete material');
+      console.error(error);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -74,10 +104,11 @@ export function MaterialCard({ material, onDelete }: MaterialCardProps) {
               )}
               <DropdownMenuItem
                 className="text-destructive"
-                onClick={() => onDelete?.(material.id)}
+                onClick={handleDelete}
+                disabled={isDeleting}
               >
                 <Trash2 className="mr-2 h-4 w-4" />
-                Delete
+                {isDeleting ? 'Deleting...' : 'Delete'}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
