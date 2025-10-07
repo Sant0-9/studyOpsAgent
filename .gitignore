@@ -47,3 +47,8 @@ next-env.d.ts
 
 # uploads
 /public/uploads
+
+# build plans and documentation
+soa-*.md
+soa-*.mermaid
+build plan/
