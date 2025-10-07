@@ -1,0 +1,153 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum AssignmentStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  OVERDUE
+}
+
+enum MaterialType {
+  PDF
+  IMAGE
+  TEXT
+  LINK
+  OTHER
+}
+
+enum ActivityType {
+  CODING
+  WRITING
+  READING
+  RESEARCH
+  PRACTICE
+  REVIEW
+}
+
+enum ErrorType {
+  SYNTAX
+  LOGIC
+  STYLE
+  TEST
+  RUNTIME
+  OTHER
+}
+
+enum HelpLevel {
+  NONE
+  HINT
+  EXPLANATION
+  SOLUTION
+}
+
+// Models
+model Assignment {
+  id                   String            @id @default(uuid())
+  title                String
+  course               String
+  description          String?
+  dueDate              DateTime
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+  status               AssignmentStatus  @default(PENDING)
+  priority             Int               @default(0)
+  estimatedHours       Float?
+  actualHours          Float             @default(0)
+  completionPercentage Int               @default(0)
+  requirements         String?           // JSON string
+  rubric               String?
+  sourceUrl            String?
+  notes                String?
+
+  // Relations
+  studyMaterials       StudyMaterial[]
+  workSessions         WorkSession[]
+  errors               Error[]
+}
+
+model StudyMaterial {
+  id           String       @id @default(uuid())
+  assignmentId String?
+  title        String
+  type         MaterialType @default(OTHER)
+  content      String?      // Extracted text content
+  fileUrl      String?
+  uploadedAt   DateTime     @default(now())
+  fileSize     Int?
+  metadata     String?      // JSON string
+
+  // Relations
+  assignment   Assignment?  @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+}
+
+model WorkSession {
+  id             String       @id @default(uuid())
+  assignmentId   String?
+  startTime      DateTime
+  endTime        DateTime?
+  duration       Int?         // in minutes
+  activityType   ActivityType @default(CODING)
+  focusScore     Int?         // 0-100
+  notes          String?
+  filesWorkedOn  String?      // JSON array
+  createdAt      DateTime     @default(now())
+
+  // Relations
+  assignment     Assignment?  @relation(fields: [assignmentId], references: [id], onDelete: SetNull)
+  errors         Error[]
+}
+
+model Error {
+  id           String     @id @default(uuid())
+  sessionId    String?
+  assignmentId String?
+  timestamp    DateTime   @default(now())
+  errorType    ErrorType  @default(OTHER)
+  category     String?
+  description  String
+  codeContext  String?
+  fixApplied   String?
+  fixDuration  Int?       // in seconds
+  wasHelpful   Boolean?
+  helpLevel    HelpLevel? @default(NONE)
+  metadata     String?    // JSON string
+
+  // Relations
+  session      WorkSession? @relation(fields: [sessionId], references: [id], onDelete: SetNull)
+  assignment   Assignment?  @relation(fields: [assignmentId], references: [id], onDelete: SetNull)
+}
+
+model Concept {
+  id                 String    @id @default(uuid())
+  name               String    @unique
+  category           String
+  description        String?
+  firstEncountered   DateTime  @default(now())
+  lastUsed           DateTime  @default(now())
+  timesEncountered   Int       @default(0)
+  timesSucceeded     Int       @default(0)
+  timesFailed        Int       @default(0)
+  masteryLevel       Float     @default(0.0) // 0.0 to 1.0
+  needsReview        Boolean   @default(false)
+  nextReviewDate     DateTime?
+  relatedConcepts    String?   // JSON array of concept IDs
+  prerequisites      String?   // JSON array of concept IDs
+}
+
+model Settings {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  value       String   // JSON string
+  description String?
+  updatedAt   DateTime @updatedAt
+}
