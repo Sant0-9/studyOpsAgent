@@ -1,4 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { AssignmentForm } from '@/components/features/assignments/assignment-form';
 
 export default function NewAssignmentPage() {
   return (
@@ -14,7 +15,7 @@ export default function NewAssignmentPage() {
           <CardDescription>Fill in the assignment information</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="text-muted-foreground">Assignment form will be implemented here</div>
+          <AssignmentForm />
         </CardContent>
       </Card>
     </div>

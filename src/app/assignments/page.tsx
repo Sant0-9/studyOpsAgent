@@ -1,9 +1,14 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Plus } from 'lucide-react';
+import { prisma } from '@/lib/db/prisma';
+import { AssignmentCard } from '@/components/features/assignments/assignment-card';
 
-export default function AssignmentsPage() {
+export default async function AssignmentsPage() {
+  const assignments = await prisma.assignment.findMany({
+    orderBy: { dueDate: 'asc' },
+  });
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
@@ -19,17 +24,31 @@ export default function AssignmentsPage() {
         </Link>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Your Assignments</CardTitle>
-          <CardDescription>All your assignments in one place</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="text-center py-8 text-muted-foreground">
+      {assignments.length === 0 ? (
+        <div className="text-center py-16">
+          <p className="text-muted-foreground mb-4">
             No assignments yet. Create your first assignment to get started!
-          </div>
-        </CardContent>
-      </Card>
+          </p>
+          <Link href="/assignments/new">
+            <Button>
+              <Plus className="mr-2 h-4 w-4" />
+              Create Assignment
+            </Button>
+          </Link>
+        </div>
+      ) : (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {assignments.map((assignment) => (
+            <AssignmentCard
+              key={assignment.id}
+              assignment={{
+                ...assignment,
+                dueDate: assignment.dueDate,
+              }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
