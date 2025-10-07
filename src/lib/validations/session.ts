@@ -2,10 +2,14 @@ import { z } from 'zod'
 import { ActivityType } from '@prisma/client'
 
 export const createSessionSchema = z.object({
-  assignmentId: z.string().uuid().optional(),
+  id: z.string().uuid().optional(),
+  assignmentId: z.string().uuid().nullable().optional(),
   startTime: z.string().or(z.date()).transform((val) => new Date(val)),
+  endTime: z.string().or(z.date()).transform((val) => new Date(val)).optional(),
+  duration: z.number().int().optional(),
   activityType: z.nativeEnum(ActivityType).default('CODING'),
-  notes: z.string().optional(),
+  focusScore: z.number().int().min(0).max(100).nullable().optional(),
+  notes: z.string().nullable().optional(),
 })
 
 export const updateSessionSchema = z.object({

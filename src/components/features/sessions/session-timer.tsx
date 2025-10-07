@@ -42,14 +42,16 @@ export function SessionTimer() {
 
   const [displayTime, setDisplayTime] = useState('00:00:00');
 
-  const { data: assignments } = useQuery<Assignment[]>({
+  const { data: assignmentsData } = useQuery<{ assignments: Assignment[] }>({
     queryKey: ['assignments'],
     queryFn: async () => {
-      const res = await fetch('/api/assignments');
+      const res = await fetch('/api/assignments?limit=100');
       if (!res.ok) throw new Error('Failed to fetch assignments');
       return res.json();
     },
   });
+
+  const assignments = assignmentsData?.assignments || [];
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
@@ -219,7 +221,7 @@ export function SessionTimer() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="none">No assignment</SelectItem>
-                {assignments?.map((assignment) => (
+                {assignments.map((assignment) => (
                   <SelectItem key={assignment.id} value={assignment.id}>
                     {assignment.title} ({assignment.course})
                   </SelectItem>
