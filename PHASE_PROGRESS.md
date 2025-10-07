@@ -31,28 +31,27 @@
 - ✅ All page routes created
 - ✅ Basic page layouts
 
-## Phase 5: Assignment Management UI ⚠️ 40%
+## Phase 5: Assignment Management UI ⚠️ 70%
 ### Completed:
-- ✅ Basic assignment list page
-- ✅ Assignment card component
-- ✅ Assignment detail page (basic)
-- ✅ Assignment form (basic)
+- ✅ Assignment list page with database integration
+- ✅ Assignment card component with status badges and progress
+- ✅ Assignment detail page with full information
+- ✅ Assignment form with validation
 - ✅ New assignment page
+- ✅ Edit assignment page
+- ✅ Assignment filters component (status, course, search)
+- ✅ Sort options (due date, priority, created, title)
+- ✅ Search functionality (title, description, course)
+- ✅ Grid/list view toggle
+- ✅ Assignment stats widget for dashboard
+- ✅ Delete confirmation dialog
 
 ### Missing:
-- ❌ Grid/list view toggle
-- ❌ Filter options (status, course, date range)
-- ❌ Sort options
-- ❌ Search functionality
-- ❌ Edit assignment page
-- ❌ Assignment filters component
-- ❌ Assignment stats widget
 - ❌ Bulk actions with checkboxes
-- ❌ Status management logic
+- ❌ Status management logic (auto-update overdue)
 - ❌ Deadline alerts/banners
-- ❌ Delete confirmation dialog
 - ❌ Requirements dynamic array in form
-- ❌ Calendar date picker
+- ❌ Calendar date picker (using native datetime-local)
 - ❌ Requirements checklist display
 - ❌ Rubric display
 

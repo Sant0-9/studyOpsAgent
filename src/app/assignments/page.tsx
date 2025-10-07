@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import { prisma } from '@/lib/db/prisma';
-import { AssignmentCard } from '@/components/features/assignments/assignment-card';
+import { AssignmentsList } from '@/components/features/assignments/assignments-list';
 
 export default async function AssignmentsPage() {
   const assignments = await prisma.assignment.findMany({
@@ -37,17 +37,7 @@ export default async function AssignmentsPage() {
           </Link>
         </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {assignments.map((assignment) => (
-            <AssignmentCard
-              key={assignment.id}
-              assignment={{
-                ...assignment,
-                dueDate: assignment.dueDate,
-              }}
-            />
-          ))}
-        </div>
+        <AssignmentsList assignments={assignments} />
       )}
     </div>
   );

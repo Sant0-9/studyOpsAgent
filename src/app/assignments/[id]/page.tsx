@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { prisma } from '@/lib/db/prisma';
 import { format } from 'date-fns';
-import { Calendar, Clock, ExternalLink, Edit } from 'lucide-react';
+import { Calendar, Clock, ExternalLink, Edit, Trash2 } from 'lucide-react';
+import { DeleteAssignmentDialog } from '@/components/features/assignments/delete-assignment-dialog';
 
 export default async function AssignmentDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -45,12 +46,20 @@ export default async function AssignmentDetailPage({ params }: { params: Promise
           <h1 className="text-3xl font-bold">{assignment.title}</h1>
           <p className="text-muted-foreground mt-1">{assignment.course}</p>
         </div>
-        <Link href={`/assignments/${id}/edit`}>
-          <Button>
-            <Edit className="mr-2 h-4 w-4" />
-            Edit
-          </Button>
-        </Link>
+        <div className="flex gap-2">
+          <Link href={`/assignments/${id}/edit`}>
+            <Button>
+              <Edit className="mr-2 h-4 w-4" />
+              Edit
+            </Button>
+          </Link>
+          <DeleteAssignmentDialog assignmentId={id} assignmentTitle={assignment.title}>
+            <Button variant="destructive">
+              <Trash2 className="mr-2 h-4 w-4" />
+              Delete
+            </Button>
+          </DeleteAssignmentDialog>
+        </div>
       </div>
 
       <div className="flex items-center gap-2 flex-wrap">
