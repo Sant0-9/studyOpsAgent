@@ -51,8 +51,20 @@
 
 Note: Bulk checkbox actions and auto-overdue status updates deferred as optional enhancements
 
-## Phase 6: Study Materials Upload ⏳ 0%
-- Not started
+## Phase 6: Study Materials Upload ⚠️ 40%
+### Completed:
+- ✅ File upload component with react-dropzone
+- ✅ Material card component with type icons and metadata
+- ✅ Upload API route with file storage
+- ✅ Upload dialog modal with assignment linking
+- ✅ Materials page with upload button
+
+### In Progress:
+- Materials list/grid display with database integration
+- Material filters and search
+- PDF text extraction
+- Material viewer component
+- Assignment integration
 
 ## Phase 7: Study Session Tracking ⏳ 0%
 - Not started
