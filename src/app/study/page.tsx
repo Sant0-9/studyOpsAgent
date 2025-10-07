@@ -3,20 +3,26 @@ import { SessionTimer } from '@/components/features/sessions/session-timer';
 import { PomodoroTimer } from '@/components/features/sessions/pomodoro-timer';
 import { SessionHistory } from '@/components/features/sessions/session-history';
 import { SessionStats } from '@/components/features/sessions/session-stats';
+import { ErrorLogForm } from '@/components/features/errors/error-log-form';
+import { ErrorList } from '@/components/features/errors/error-list';
+import { ErrorStats } from '@/components/features/errors/error-stats';
 
 export default function StudyPage() {
   return (
     <div className="container mx-auto p-6 space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Study Session</h1>
+        <ErrorLogForm />
       </div>
 
       <Tabs defaultValue="timer" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="timer">Timer</TabsTrigger>
           <TabsTrigger value="pomodoro">Pomodoro</TabsTrigger>
           <TabsTrigger value="history">History</TabsTrigger>
           <TabsTrigger value="stats">Statistics</TabsTrigger>
+          <TabsTrigger value="errors">Errors</TabsTrigger>
+          <TabsTrigger value="error-stats">Error Stats</TabsTrigger>
         </TabsList>
 
         <TabsContent value="timer" className="space-y-6">
@@ -67,6 +73,14 @@ export default function StudyPage() {
 
         <TabsContent value="stats" className="space-y-6">
           <SessionStats />
+        </TabsContent>
+
+        <TabsContent value="errors" className="space-y-6">
+          <ErrorList />
+        </TabsContent>
+
+        <TabsContent value="error-stats" className="space-y-6">
+          <ErrorStats />
         </TabsContent>
       </Tabs>
     </div>
