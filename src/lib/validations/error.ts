@@ -12,7 +12,7 @@ export const createErrorSchema = z.object({
   fixDuration: z.number().int().positive().optional(),
   wasHelpful: z.boolean().optional(),
   helpLevel: z.nativeEnum(HelpLevel).optional(),
-  metadata: z.record(z.any()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
 })
 
 export const updateErrorSchema = z.object({

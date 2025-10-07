@@ -8,14 +8,14 @@ export const createMaterialSchema = z.object({
   content: z.string().optional(),
   fileUrl: z.string().optional(),
   fileSize: z.number().int().positive().optional(),
-  metadata: z.record(z.any()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
 })
 
 export const updateMaterialSchema = z.object({
   title: z.string().min(1).max(255).optional(),
   assignmentId: z.string().uuid().optional().nullable(),
   content: z.string().optional(),
-  metadata: z.record(z.any()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
 })
 
 export type CreateMaterialInput = z.infer<typeof createMaterialSchema>

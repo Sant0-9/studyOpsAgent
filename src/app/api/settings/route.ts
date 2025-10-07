@@ -9,7 +9,7 @@ const createSettingSchema = z.object({
   description: z.string().optional(),
 })
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const settings = await prisma.settings.findMany({
       orderBy: { key: 'asc' },

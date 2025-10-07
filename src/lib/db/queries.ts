@@ -1,5 +1,4 @@
 import { prisma } from './prisma'
-import { AssignmentStatus } from '@prisma/client'
 
 // Assignment queries
 export async function getUpcomingAssignments(limit = 5) {
