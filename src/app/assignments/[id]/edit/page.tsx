@@ -24,6 +24,8 @@ export default async function EditAssignmentPage({ params }: { params: Promise<{
     priority: assignment.priority,
     sourceUrl: assignment.sourceUrl || '',
     notes: assignment.notes || '',
+    requirements: assignment.requirements || '',
+    rubric: assignment.rubric || '',
   };
 
   return (

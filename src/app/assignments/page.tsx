@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import { prisma } from '@/lib/db/prisma';
 import { AssignmentsList } from '@/components/features/assignments/assignments-list';
+import { DeadlineAlerts } from '@/components/features/assignments/deadline-alerts';
 
 export default async function AssignmentsPage() {
   const assignments = await prisma.assignment.findMany({
@@ -23,6 +24,8 @@ export default async function AssignmentsPage() {
           </Button>
         </Link>
       </div>
+
+      <DeadlineAlerts assignments={assignments} />
 
       {assignments.length === 0 ? (
         <div className="text-center py-16">

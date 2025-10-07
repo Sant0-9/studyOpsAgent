@@ -8,6 +8,7 @@ import { prisma } from '@/lib/db/prisma';
 import { format } from 'date-fns';
 import { Calendar, Clock, ExternalLink, Edit, Trash2 } from 'lucide-react';
 import { DeleteAssignmentDialog } from '@/components/features/assignments/delete-assignment-dialog';
+import { StatusSelect } from '@/components/features/assignments/status-select';
 
 export default async function AssignmentDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -62,10 +63,11 @@ export default async function AssignmentDetailPage({ params }: { params: Promise
         </div>
       </div>
 
-      <div className="flex items-center gap-2 flex-wrap">
-        <Badge className={statusColors[assignment.status]}>
-          {statusLabels[assignment.status]}
-        </Badge>
+      <div className="flex items-center gap-4 flex-wrap">
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-muted-foreground">Status:</span>
+          <StatusSelect assignmentId={id} currentStatus={assignment.status} />
+        </div>
         {assignment.priority > 5 && (
           <Badge variant="outline">High Priority ({assignment.priority}/10)</Badge>
         )}
@@ -119,6 +121,29 @@ export default async function AssignmentDetailPage({ params }: { params: Promise
                 <h3 className="font-semibold mb-1">Notes</h3>
                 <p className="text-sm text-muted-foreground whitespace-pre-wrap">
                   {assignment.notes}
+                </p>
+              </div>
+            )}
+
+            {assignment.requirements && (
+              <div>
+                <h3 className="font-semibold mb-2">Requirements</h3>
+                <ul className="space-y-1">
+                  {assignment.requirements.split('\n').filter(r => r.trim()).map((req, idx) => (
+                    <li key={idx} className="text-sm flex items-start gap-2">
+                      <span className="text-muted-foreground">•</span>
+                      <span>{req}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {assignment.rubric && (
+              <div>
+                <h3 className="font-semibold mb-1">Rubric</h3>
+                <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                  {assignment.rubric}
                 </p>
               </div>
             )}

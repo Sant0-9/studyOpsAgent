@@ -20,6 +20,8 @@ const assignmentSchema = z.object({
   priority: z.number().min(0).max(10),
   sourceUrl: z.string().url().optional().or(z.literal('')),
   notes: z.string().optional(),
+  requirements: z.string().optional(),
+  rubric: z.string().optional(),
 });
 
 type AssignmentFormData = z.infer<typeof assignmentSchema>;
@@ -165,6 +167,27 @@ export function AssignmentForm({ initialData, assignmentId }: AssignmentFormProp
           placeholder="Additional notes"
           rows={3}
           {...register('notes')}
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="requirements">Requirements</Label>
+        <Textarea
+          id="requirements"
+          placeholder="Enter requirements (one per line)"
+          rows={5}
+          {...register('requirements')}
+        />
+        <p className="text-xs text-muted-foreground">Enter each requirement on a new line</p>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="rubric">Rubric</Label>
+        <Textarea
+          id="rubric"
+          placeholder="Grading rubric or criteria"
+          rows={5}
+          {...register('rubric')}
         />
       </div>
 
